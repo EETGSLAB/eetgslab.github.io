@@ -1,0 +1,51 @@
+# =============================================
+# EET-GS Lab — Jekyll Configuration
+# =============================================
+
+title: "EET-GS Lab"
+description: "Energy Equity & Transition for the Global South"
+url: "https://eetgslab.github.io"
+baseurl: ""
+author: "EET-GS Lab"
+
+# Build settings
+markdown: kramdown
+theme: null
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Navigation (used in layout)
+nav_links:
+  - title: Home
+    url: /
+  - title: Projects
+    url: /projects/
+  - title: Publications
+    url: /publications/
+  - title: Lab Members
+    url: /members/
+  - title: Contact
+    url: /contact/
+
+# Social / contact
+contact:
+  email: "contact@eetgslab.org"
+  github: "https://github.com/EETGSLAB"
+  location: "Global South Research Network (hybrid)"
+
+# Exclude from build
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: default

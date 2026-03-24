@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EET-GS Lab — Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    /* === VARIABLES === */
+    :root {
+      --bg:#f7f5f0; --surface:#ffffff; --border:#e2ddd6;
+      --text:#1c1a17; --muted:#6b6660;
+      --accent:#2d6a4f; --accent2:#d4a017; --accent3:#e76f51;
+      --nav:#1c1a17; --footer:#1c1a17; --footer-text:#c8c3bc;
+      --font-d:'Sora',sans-serif; --font-b:'Lora',serif;
+      --r:6px; --max:1100px;
+      --sh:0 6px 24px rgba(0,0,0,.10);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-b);background:var(--bg);color:var(--text);line-height:1.75;display:flex;flex-direction:column;min-height:100vh}
+    img{max-width:100%;display:block}
+    a{color:var(--accent);text-decoration:none;transition:.2s}
+    a:hover{color:var(--accent3)}
+    .container{max-width:var(--max);margin:0 auto;padding:0 1.5rem}
+    .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+    /* NAV */
+    .site-nav{position:sticky;top:0;z-index:100;background:var(--nav);height:68px;display:flex;align-items:center;box-shadow:0 2px 12px rgba(0,0,0,.20)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;width:100%}
+    .nav-brand{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+    .nav-logo{width:38px;height:38px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:700;font-size:.85rem;color:#fff;flex-shrink:0}
+    .nav-title{font-family:var(--font-d);font-weight:600;font-size:1rem;color:#fff;line-height:1.2}
+    .nav-sub{font-family:var(--font-d);font-size:.7rem;font-weight:300;color:var(--accent2);display:block;letter-spacing:.04em}
+    .nav-links{display:flex;gap:.25rem;list-style:none;align-items:center}
+    .nav-links a{font-family:var(--font-d);font-size:.82rem;color:#c8c3bc;padding:.4rem .75rem;border-radius:var(--r);transition:.2s;white-space:nowrap}
+    .nav-links a:hover,.nav-links a.active{color:#fff;background:rgba(255,255,255,.10)}
+    .nav-cta{background:var(--accent)!important;color:#fff!important;font-weight:600}
+    .nav-cta:hover{background:#235c41!important}
+
+    /* PAGE TAB SYSTEM */
+    .page{display:none}.page.active{display:block}
+
+    /* HERO */
+    .hero{background:linear-gradient(135deg,#0f1f17,#1c3326 50%,#152b20);color:#fff;padding:5rem 0 4.5rem;position:relative;overflow:hidden}
+    .hero::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:60px;background:var(--bg);clip-path:ellipse(55% 100% at 50% 100%)}
+    .hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .hero-tag{display:inline-block;font-family:var(--font-d);font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);background:rgba(212,160,23,.12);border:1px solid rgba(212,160,23,.30);border-radius:20px;padding:.3rem .9rem;margin-bottom:1.2rem}
+    .hero h1{font-family:var(--font-d);font-size:clamp(2rem,5vw,3.2rem);font-weight:700;line-height:1.1;margin-bottom:1.2rem}
+    .hero h1 span{color:var(--accent2)}
+    .hero-desc{font-size:1.05rem;color:#b8d4c4;margin-bottom:2rem;max-width:480px}
+    .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+    .stat-cards{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+    .stat-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);border-radius:var(--r);padding:1.1rem 1.2rem}
+    .stat-card .num{font-family:var(--font-d);font-size:2rem;font-weight:700;color:var(--accent2);line-height:1}
+    .stat-card .lbl{font-family:var(--font-d);font-size:.75rem;color:#8ab4a0;margin-top:.3rem;line-height:1.3}
+
+    /* BUTTONS */
+    .btn{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--font-d);font-size:.85rem;font-weight:600;padding:.65rem 1.4rem;border-radius:var(--r);border:2px solid transparent;cursor:pointer;transition:.2s;text-decoration:none;line-height:1;white-space:nowrap}
+    .btn-p{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .btn-p:hover{background:#235c41;border-color:#235c41;color:#fff;transform:translateY(-1px);box-shadow:0 4px 16px rgba(45,106,79,.35)}
+    .btn-o{background:transparent;color:#fff;border-color:rgba(255,255,255,.35)}
+    .btn-o:hover{background:rgba(255,255,255,.10);color:#fff;border-color:rgba(255,255,255,.6)}
+    .btn-od{background:transparent;color:var(--accent);border-color:var(--accent)}
+    .btn-od:hover{background:var(--accent);color:#fff}
+
+    /* SECTIONS */
+    .section{padding:4.5rem 0}
+    .section-alt{background:#eeeae3}
+    .section-dark{background:#1c2e25;color:#fff}
+    .sec-eye{font-family:var(--font-d);font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+    .sec-h2{font-family:var(--font-d);font-size:clamp(1.5rem,3vw,2.1rem);font-weight:700;line-height:1.2;margin-bottom:.6rem}
+    .sec-lead{color:var(--muted);max-width:560px;font-size:.97rem}
+    .section-dark .sec-eye{color:var(--accent2)}
+    .section-dark .sec-h2{color:#fff}
+    .section-dark .sec-lead{color:#8ab4a0}
+
+    /* PAGE HEADER BAND */
+    .ph{background:linear-gradient(135deg,#1c2e25,#2d4a3a 60%,#1a3a2a);color:#fff;padding:3.5rem 0 3rem}
+    .ph-eye{font-family:var(--font-d);font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:.6rem}
+    .ph h1{font-family:var(--font-d);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;line-height:1.15;margin-bottom:.75rem}
+    .ph p{font-size:1.05rem;color:#b8d4c4;max-width:600px;font-style:italic}
+
+    /* ABOUT TWO-COL */
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center}
+
+    /* IMPACT STRIP */
+    .impact-strip{display:grid;grid-template-columns:repeat(3,1fr);background:var(--accent);border-radius:var(--r);overflow:hidden}
+    .impact-item{padding:2rem 1.5rem;text-align:center;border-right:1px solid rgba(255,255,255,.15)}
+    .impact-item:last-child{border-right:none}
+    .impact-item .num{font-family:var(--font-d);font-size:2.2rem;font-weight:700;color:#fff;line-height:1}
+    .impact-item .lbl{font-family:var(--font-d);font-size:.78rem;color:rgba(255,255,255,.7);margin-top:.35rem;line-height:1.4}
+
+    /* FOCUS GRID */
+    .focus-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+    .focus-item{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);border-radius:var(--r);padding:1.4rem 1.1rem;text-align:center;transition:.2s}
+    .focus-item:hover{background:rgba(255,255,255,.10);transform:translateY(-2px)}
+    .focus-icon{font-size:1.8rem;margin-bottom:.65rem}
+    .focus-item h3{font-family:var(--font-d);font-size:.82rem;font-weight:600;color:#fff;margin-bottom:.4rem;line-height:1.3}
+    .focus-item p{font-size:.78rem;color:#6b9f85;line-height:1.5}
+
+    /* EXPLORE CARDS */
+    .card-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.6rem;transition:.2s}
+    .card:hover{box-shadow:var(--sh);transform:translateY(-2px)}
+    .card-icon{width:44px;height:44px;background:linear-gradient(135deg,#e8f4ee,#d0eadc);border-radius:var(--r);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.3rem}
+    .card h3{font-family:var(--font-d);font-size:1rem;font-weight:600;margin-bottom:.5rem}
+    .card p{font-size:.9rem;color:var(--muted);line-height:1.6}
+
+    /* PROJECT CARDS */
+    .proj-list{display:flex;flex-direction:column;gap:1.25rem}
+    .proj-card{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--r);padding:1.6rem 1.8rem;transition:.2s}
+    .proj-card:hover{box-shadow:var(--sh)}
+    .badge{display:inline-block;font-family:var(--font-d);font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .7rem;border-radius:20px;margin-bottom:.5rem}
+    .ba{background:#d1fae5;color:#065f46}
+    .bd{background:#fef3c7;color:#92400e}
+    .bp{background:#dbeafe;color:#1e40af}
+    .proj-card h3{font-family:var(--font-d);font-size:1.05rem;font-weight:600;margin-bottom:.4rem}
+    .proj-card p{font-size:.9rem;color:var(--muted);line-height:1.6}
+
+    /* PUBLICATIONS */
+    .pub-list{display:flex;flex-direction:column;gap:1.2rem}
+    .pub-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem 1.8rem;display:flex;gap:1.4rem;align-items:flex-start;transition:.2s}
+    .pub-card:hover{box-shadow:var(--sh)}
+    .pub-year{font-family:var(--font-d);font-size:.8rem;font-weight:700;color:var(--accent);background:#e8f4ee;border-radius:var(--r);padding:.4rem .75rem;white-space:nowrap;flex-shrink:0}
+    .pub-content h3{font-family:var(--font-d);font-size:1rem;font-weight:600;margin-bottom:.35rem;line-height:1.4}
+    .pub-venue{font-size:.85rem;color:var(--muted);font-style:italic;margin-bottom:.5rem}
+    .pub-content p{font-size:.88rem;color:var(--muted)}
+
+    /* MEMBERS */
+    .mem-sec{margin-bottom:2.5rem}
+    .mem-sec-title{font-family:var(--font-d);font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.2rem;padding-bottom:.5rem;border-bottom:2px solid var(--border)}
+    .mem-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem}
+    .mem-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem 1.2rem;text-align:center;transition:.2s}
+    .mem-card:hover{box-shadow:var(--sh);transform:translateY(-2px)}
+    .mem-av{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#2d6a4f,#40916c);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:700;font-size:1.3rem;color:#fff;margin:0 auto .9rem}
+    .mem-name{font-family:var(--font-d);font-size:.95rem;font-weight:600;margin-bottom:.25rem}
+    .mem-role{font-size:.8rem;color:var(--muted);margin-bottom:.5rem;line-height:1.4}
+    .mem-email{font-family:var(--font-d);font-size:.75rem;color:var(--accent)}
+
+    /* CONTACT */
+    .contact-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:3rem;align-items:start}
+    .ci{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.4rem}
+    .ci-icon{width:40px;height:40px;background:#e8f4ee;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+    .ci-text h4{font-family:var(--font-d);font-size:.85rem;font-weight:600;margin-bottom:.2rem}
+    .ci-text p,.ci-text a{font-size:.9rem;color:var(--muted)}
+    .cf{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:2rem}
+    .cf h3{font-family:var(--font-d);font-size:1.1rem;font-weight:600;margin-bottom:1.5rem}
+    .fg{margin-bottom:1.1rem}
+    .fg label{display:block;font-family:var(--font-d);font-size:.8rem;font-weight:600;margin-bottom:.4rem}
+    .fg input,.fg textarea,.fg select{width:100%;padding:.65rem .9rem;border:1px solid var(--border);border-radius:var(--r);font-family:var(--font-b);font-size:.9rem;background:var(--bg);color:var(--text);transition:.2s}
+    .fg input:focus,.fg textarea:focus,.fg select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(45,106,79,.12)}
+    .fg textarea{resize:vertical;min-height:120px}
+    .fr{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+    /* FOOTER */
+    .site-footer{background:var(--footer);color:var(--footer-text);padding:3rem 0 1.5rem;margin-top:auto}
+    .fi{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:3rem;margin-bottom:2.5rem}
+    .fb h3{font-family:var(--font-d);font-size:1rem;font-weight:600;color:#fff;margin-bottom:.75rem}
+    .fb p{font-size:.85rem;line-height:1.7;color:#8a8480;max-width:280px}
+    .fc h4{font-family:var(--font-d);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2);margin-bottom:1rem}
+    .fc ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+    .fc ul a{font-size:.875rem;color:#8a8480;transition:.2s}
+    .fc ul a:hover{color:#fff}
+    .fb-bot{border-top:1px solid #2e2b28;padding-top:1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+    .fb-bot p{font-family:var(--font-d);font-size:.8rem;color:#5a5855}
+
+    /* CTA BOX */
+    .cta-box{background:linear-gradient(135deg,#1c2e25,#2d4a3a);border-radius:var(--r);padding:2.5rem;text-align:center;color:#fff;margin-top:3rem}
+    .cta-box h3{font-family:var(--font-d);font-size:1.3rem;font-weight:700;margin-bottom:.75rem}
+    .cta-box p{color:#8ab4a0;margin-bottom:1.5rem;max-width:480px;margin-left:auto;margin-right:auto}
+
+    /* RESPONSIVE */
+    @media(max-width:900px){
+      .hero-inner{grid-template-columns:1fr}.stat-cards{display:none}
+      .card-grid-3{grid-template-columns:1fr 1fr}
+      .focus-grid{grid-template-columns:repeat(3,1fr)}
+      .contact-layout{grid-template-columns:1fr}
+      .fi{grid-template-columns:1fr 1fr}
+      .impact-strip{grid-template-columns:1fr}
+      .impact-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.15)}
+      .two-col{grid-template-columns:1fr}
+    }
+    @media(max-width:640px){
+      .card-grid-3{grid-template-columns:1fr}
+      .focus-grid{grid-template-columns:1fr 1fr}
+      .fi{grid-template-columns:1fr;gap:1.5rem}
+      .fr{grid-template-columns:1fr}
+      .pub-card{flex-direction:column;gap:.75rem}
+      .mem-grid{grid-template-columns:repeat(2,1fr)}
+      .nav-links{display:none}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="site-nav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-brand" onclick="showPage('home')">
+      <div class="nav-logo">EET</div>
+      <div>
+        <span class="nav-title">EET-GS Lab</span>
+        <span class="nav-sub">Energy Equity &amp; Transition</span>
+      </div>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+      <li><a href="#" onclick="showPage('projects')" id="nav-projects">Projects</a></li>
+      <li><a href="#" onclick="showPage('publications')" id="nav-publications">Publications</a></li>
+      <li><a href="#" onclick="showPage('members')" id="nav-members">Lab Members</a></li>
+      <li><a href="#" onclick="showPage('contact')" id="nav-contact" class="nav-cta">Collaborate</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===== HOME ===== -->
+<div id="page-home" class="page active">
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div>
+          <span class="hero-tag">Research Lab · Global South</span>
+          <h1>Energy Equity And Transition For The <span>Global South</span></h1>
+          <p class="hero-desc">A global research initiative dedicated to advancing equitable, sustainable pathways for the energy transition across developing economies.</p>
+          <div class="hero-actions">
+            <a href="#" class="btn btn-p" onclick="showPage('projects')">Explore Projects</a>
+            <a href="#" class="btn btn-o" onclick="showPage('contact')">Partner With Us</a>
+          </div>
+        </div>
+        <div class="stat-cards" aria-hidden="true">
+          <div class="stat-card"><div class="num">1+</div><div class="lbl">Regional Studies Completed</div></div>
+          <div class="stat-card"><div class="num">1+</div><div class="lbl">Active Partners Worldwide</div></div>
+          <div class="stat-card"><div class="num">1+</div><div class="lbl">Publications &amp; Reports</div></div>
+          <div class="stat-card"><div class="num">6</div><div class="lbl">Active Research Programs</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="two-col">
+        <div>
+          <p class="sec-eye">About the Lab</p>
+          <h2 class="sec-h2">Who We Are</h2>
+          <p style="margin-bottom:1rem">The EET-GS Lab is a global research initiative dedicated to advancing equitable, sustainable, and scientifically rigorous pathways for the energy transition across the Global South.</p>
+          <p style="margin-bottom:1rem;color:var(--muted)">We generate knowledge, tools, and evidence that support emerging economies as they move toward clean, affordable, and resilient power systems—without compromising developmental priorities.</p>
+          <p style="color:var(--muted)">Our work integrates energy equity, distributional justice, and socio-economic impacts to ensure that decarbonization strategies enhance livelihoods, improve access, and contribute to inclusive development.</p>
+          <div style="margin-top:1.8rem"><a href="#" class="btn btn-od" onclick="showPage('members')">Meet the Team</a></div>
+        </div>
+        <div>
+          <div class="impact-strip">
+            <div class="impact-item"><div class="num">1+</div><div class="lbl">Regional Studies — Southeast Asia, Sub-Saharan Africa &amp; Latin America</div></div>
+            <div class="impact-item"><div class="num">1+</div><div class="lbl">Active Partners — Utilities, ministries, NGOs &amp; research consortia</div></div>
+            <div class="impact-item"><div class="num">1+</div><div class="lbl">Publications — Peer-reviewed articles, policy briefs &amp; open datasets</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="container">
+      <div style="margin-bottom:2.5rem">
+        <p class="sec-eye">What We Study</p>
+        <h2 class="sec-h2" style="color:#fff">Research Focus Areas</h2>
+        <p class="sec-lead">Five integrated pillars that shape our interdisciplinary agenda.</p>
+      </div>
+      <div class="focus-grid">
+        <div class="focus-item"><div class="focus-icon">⚡</div><h3>Power System Modeling</h3><p>Long-term scenario planning, renewable integration, and system reliability.</p></div>
+        <div class="focus-item"><div class="focus-icon">⚖️</div><h3>Energy Equity &amp; Just Transition</h3><p>Affordability, access, fairness, and distributional impacts.</p></div>
+        <div class="focus-item"><div class="focus-icon">☀️</div><h3>Renewable Energy Integration</h3><p>Solar, wind, storage, and grid solutions for developing economies.</p></div>
+        <div class="focus-item"><div class="focus-icon">🔌</div><h3>Demand-Side Pathways</h3><p>Electrification, efficiency, and behavioral transitions.</p></div>
+        <div class="focus-item"><div class="focus-icon">📋</div><h3>Policy Analysis</h3><p>Evidence-based insights for national climate and energy strategies.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div style="margin-bottom:2.5rem"><p class="sec-eye">Explore</p><h2 class="sec-h2">Explore the Lab</h2></div>
+      <div class="card-grid-3">
+        <div class="card"><div class="card-icon">🔬</div><h3>Projects</h3><p>Explore active research programs and country partnerships across the Global South.</p><div style="margin-top:1.2rem"><a href="#" class="btn btn-od" style="font-size:.8rem;padding:.5rem 1rem" onclick="showPage('projects')">View Projects →</a></div></div>
+        <div class="card"><div class="card-icon">📄</div><h3>Publications</h3><p>Browse peer-reviewed articles, policy briefs, and modeling reports from our team.</p><div style="margin-top:1.2rem"><a href="#" class="btn btn-od" style="font-size:.8rem;padding:.5rem 1rem" onclick="showPage('publications')">Read Publications →</a></div></div>
+        <div class="card"><div class="card-icon">👥</div><h3>Lab Members</h3><p>Meet our interdisciplinary team of researchers, analysts, and global collaborators.</p><div style="margin-top:1.2rem"><a href="#" class="btn btn-od" style="font-size:.8rem;padding:.5rem 1rem" onclick="showPage('members')">Meet the Team →</a></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== PROJECTS ===== -->
+<div id="page-projects" class="page">
+  <header class="ph"><div class="container"><p class="ph-eye">Research Programs</p><h1>Flagship Research Programs</h1><p>We co-design research with policy partners, utilities, and community leaders to deliver actionable insights.</p></div></header>
+  <section class="section"><div class="container">
+    <div class="proj-list">
+      <article class="proj-card"><span class="badge ba">Active</span><h3>Equitable Grid Expansion Accelerator</h3><p>Mapping last-mile electrification priorities and affordability metrics to ensure reliable access for rural and peri-urban communities. Develops open-source spatial planning tools and community-level affordability indices.</p></article>
+      <article class="proj-card"><span class="badge ba">Active</span><h3>Regional Renewable Integration Pathways</h3><p>Long-term scenario planning for solar, wind, storage, and transmission build-out with a focus on reliability and cost-effectiveness, using PyPSA-based capacity expansion models calibrated for developing country contexts.</p></article>
+      <article class="proj-card" style="border-left-color:var(--accent2)"><span class="badge bd">In Development</span><h3>Just Transition Workforce Observatory</h3><p>Tracking employment shifts, reskilling needs, and policy levers to protect vulnerable workers in the energy transition. Combines labor market data with energy system modeling to quantify job transitions.</p></article>
+      <article class="proj-card"><span class="badge ba">Active</span><h3>Demand-Side Flexibility Lab</h3><p>Evaluating electrification, efficiency, and behavioral interventions to manage peak load and improve system resilience. Focuses on cooking, cooling, and mobility electrification in South and Southeast Asia.</p></article>
+      <article class="proj-card" style="border-left-color:#3b82f6"><span class="badge bp">Partnered</span><h3>Policy and Financing Clinics</h3><p>Evidence-based recommendations for national climate plans, regulatory reforms, and sustainable investment strategies, delivered through direct engagement with energy ministries and development finance institutions.</p></article>
+      <article class="proj-card"><span class="badge ba">Active</span><h3>Community Energy Equity Dashboard</h3><p>Open-source data platform tracking equity indicators, subsidy impacts, and energy access progress. Designed for use by civil society organizations, regulators, and researchers across the Global South.</p></article>
+    </div>
+    <div class="cta-box"><h3>Interested in collaborating?</h3><p>We welcome partnerships with governments, utilities, NGOs, and academic institutions to co-develop research.</p><a href="#" class="btn btn-p" onclick="showPage('contact')">Get in Touch</a></div>
+  </div></section>
+</div>
+
+<!-- ===== PUBLICATIONS ===== -->
+<div id="page-publications" class="page">
+  <header class="ph"><div class="container"><p class="ph-eye">Research Outputs</p><h1>Recent Outputs &amp; Reports</h1><p>Our publications translate research into actionable pathways for policymakers and practitioners.</p></div></header>
+  <section class="section"><div class="container">
+    <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2rem">
+      <span style="font-family:var(--font-d);font-size:.78rem;background:var(--accent);color:#fff;padding:.3rem .9rem;border-radius:20px">All</span>
+      <span style="font-family:var(--font-d);font-size:.78rem;background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:.3rem .9rem;border-radius:20px">Journal Articles</span>
+      <span style="font-family:var(--font-d);font-size:.78rem;background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:.3rem .9rem;border-radius:20px">Policy Briefs</span>
+      <span style="font-family:var(--font-d);font-size:.78rem;background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:.3rem .9rem;border-radius:20px">Reports</span>
+    </div>
+    <div class="pub-list">
+      <article class="pub-card">
+        <div class="pub-year">2024</div>
+        <div class="pub-content">
+          <h3>PyPSA-BD: A customized model to explore decarbonized energy transition for developing country</h3>
+          <p class="pub-venue">Renewable Energy Focus · 2024</p>
+          <p>Highlights power sector decarbonization in Bangladesh using a customized open-source capacity expansion model. Demonstrates pathways for rapid renewable scale-up while maintaining system reliability.</p>
+        </div>
+      </article>
+      <article class="pub-card" style="opacity:.5">
+        <div class="pub-year">—</div>
+        <div class="pub-content"><h3>Upcoming publication</h3><p class="pub-venue">To be announced</p><p>New research outputs will appear here as they are published.</p></div>
+      </article>
+    </div>
+    <div style="margin-top:2.5rem;padding:1.2rem 1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r)">
+      <p style="font-size:.88rem;color:var(--muted)"><strong style="color:var(--text)">For researchers:</strong> Open datasets and model code are available via <a href="https://github.com/FiruzAhamed/eetgslab" target="_blank">GitHub</a>. Contact <a href="mailto:contact@eetgslab.org">contact@eetgslab.org</a> for data access requests.</p>
+    </div>
+  </div></section>
+</div>
+
+<!-- ===== MEMBERS ===== -->
+<div id="page-members" class="page">
+  <header class="ph"><div class="container"><p class="ph-eye">The Team</p><h1>People Behind the Research</h1><p>Our researchers, analysts, and student scholars collaborate across regions to deliver equitable energy transition insights.</p></div></header>
+  <section class="section"><div class="container">
+    <div class="mem-sec">
+      <h2 class="mem-sec-title">Director</h2>
+      <div class="mem-grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,280px))">
+        <div class="mem-card"><div class="mem-av">N</div><p class="mem-name">Dr. Nahid</p><p class="mem-role">Lab Director · Energy Equity &amp; Governance</p><a href="mailto:nahid@eetgslab.org" class="mem-email">nahid@eetgslab.org</a></div>
+      </div>
+    </div>
+    <div class="mem-sec">
+      <h2 class="mem-sec-title">Senior Researchers</h2>
+      <div class="mem-grid">
+        <div class="mem-card"><div class="mem-av">A</div><p class="mem-name">Dr. ABC</p><p class="mem-role">Power Systems Planning Lead</p><a href="mailto:m.ndlovu@eetgslab.org" class="mem-email">m.ndlovu@eetgslab.org</a></div>
+      </div>
+    </div>
+    <div class="mem-sec">
+      <h2 class="mem-sec-title">Junior Researchers</h2>
+      <div class="mem-grid">
+        <div class="mem-card"><div class="mem-av">S</div><p class="mem-name">ABC</p><p class="mem-role">Energy Data Analytics</p><a href="mailto:s.patel@eetgslab.org" class="mem-email">s.patel@eetgslab.org</a></div>
+      </div>
+    </div>
+    <div class="mem-sec">
+      <h2 class="mem-sec-title">Interns</h2>
+      <div class="mem-grid">
+        <div class="mem-card"><div class="mem-av">I</div><p class="mem-name">ABC</p><p class="mem-role">Modeling &amp; Visualization Intern</p><a href="mailto:a.bello@eetgslab.org" class="mem-email">a.bello@eetgslab.org</a></div>
+      </div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:2rem;display:flex;gap:2rem;align-items:center;flex-wrap:wrap">
+      <div style="flex:1;min-width:240px"><h3 style="font-family:var(--font-d);font-size:1.05rem;font-weight:600;margin-bottom:.4rem">Join the Lab</h3><p style="font-size:.9rem;color:var(--muted)">We welcome visiting scholars, postdoctoral researchers, and motivated student collaborators.</p></div>
+      <a href="#" class="btn btn-p" onclick="showPage('contact')">Get in Touch</a>
+    </div>
+  </div></section>
+</div>
+
+<!-- ===== CONTACT ===== -->
+<div id="page-contact" class="page">
+  <header class="ph"><div class="container"><p class="ph-eye">Get In Touch</p><h1>Let's build equitable transitions together.</h1><p>We welcome collaboration with governments, utilities, NGOs, and academic partners.</p></div></header>
+  <section class="section"><div class="container">
+    <div class="contact-layout">
+      <div>
+        <div class="ci"><div class="ci-icon">✉️</div><div class="ci-text"><h4>Email</h4><a href="mailto:contact@eetgslab.org">contact@eetgslab.org</a></div></div>
+        <div class="ci"><div class="ci-icon">🌍</div><div class="ci-text"><h4>Location</h4><p>Global South Research Network (hybrid)</p></div></div>
+        <div class="ci"><div class="ci-icon">🤝</div><div class="ci-text"><h4>Collaboration</h4><p>Open to visiting scholars and policy partners.</p></div></div>
+        <div class="ci"><div class="ci-icon">💻</div><div class="ci-text"><h4>GitHub</h4><a href="https://github.com/FiruzAhamed/eetgslab" target="_blank">github.com/FiruzAhamed/eetgslab</a></div></div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem;margin-top:.5rem">
+          <h4 style="font-family:var(--font-d);font-size:.85rem;font-weight:600;margin-bottom:.75rem">How You Can Engage</h4>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:.6rem">
+            <li style="font-size:.88rem;color:var(--muted);padding-left:1rem;position:relative"><span style="position:absolute;left:0;color:var(--accent)">→</span>Co-develop research and contribute data</li>
+            <li style="font-size:.88rem;color:var(--muted);padding-left:1rem;position:relative"><span style="position:absolute;left:0;color:var(--accent)">→</span>Host regional workshops or policy clinics</li>
+            <li style="font-size:.88rem;color:var(--muted);padding-left:1rem;position:relative"><span style="position:absolute;left:0;color:var(--accent)">→</span>Subscribe to lab updates and model releases</li>
+            <li style="font-size:.88rem;color:var(--muted);padding-left:1rem;position:relative"><span style="position:absolute;left:0;color:var(--accent)">→</span>Apply as a visiting scholar or intern</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cf">
+        <h3>Send a Message</h3>
+        <div class="fr">
+          <div class="fg"><label>First Name</label><input type="text" placeholder="Your first name" /></div>
+          <div class="fg"><label>Last Name</label><input type="text" placeholder="Your last name" /></div>
+        </div>
+        <div class="fg"><label>Email Address</label><input type="email" placeholder="you@institution.org" /></div>
+        <div class="fg"><label>Organization / Affiliation</label><input type="text" placeholder="University, ministry, NGO, etc." /></div>
+        <div class="fg">
+          <label>Inquiry Type</label>
+          <select>
+            <option value="">Select one…</option>
+            <option>Research Collaboration</option>
+            <option>Data / Model Access</option>
+            <option>Policy Engagement</option>
+            <option>Media / Press</option>
+            <option>Joining the Lab</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="fg"><label>Message</label><textarea placeholder="Describe your interest or question…"></textarea></div>
+        <button class="btn btn-p" style="width:100%;justify-content:center">Submit Inquiry</button>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:.75rem;text-align:center">We aim to respond within 3–5 business days.</p>
+      </div>
+    </div>
+  </div></section>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="fi">
+      <div class="fb">
+        <div class="nav-logo" style="margin-bottom:.8rem">EET</div>
+        <h3>EET-GS Lab</h3>
+        <p>Advancing equitable, resilient, and low-carbon power systems for the Global South through evidence-based research, modeling, and policy engagement.</p>
+      </div>
+      <div class="fc">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('home')">Home</a></li>
+          <li><a href="#" onclick="showPage('projects')">Projects</a></li>
+          <li><a href="#" onclick="showPage('publications')">Publications</a></li>
+          <li><a href="#" onclick="showPage('members')">Lab Members</a></li>
+          <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div class="fc">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="mailto:contact@eetgslab.org">contact@eetgslab.org</a></li>
+          <li><a href="https://github.com/FiruzAhamed/eetgslab" target="_blank">GitHub</a></li>
+          <li><a href="#" onclick="showPage('contact')">Partner With Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fb-bot">
+      <p>&copy; 2024 Energy Equity &amp; Transition Lab &mdash; Hosted on GitHub Pages</p>
+      <p>GPL-3.0 License</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const navLink = document.getElementById('nav-' + id);
+  if (navLink) navLink.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  return false;
+}
+</script>
+</body>
+</html>

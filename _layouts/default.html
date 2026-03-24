@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="{{ page.description | default: site.description }}" />
+  <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+
+  <!-- Favicon (placeholder — replace with actual file in /images/) -->
+  <link rel="icon" href="{{ site.baseurl }}/images/favicon.png" type="image/png" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="site-nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav-inner">
+
+      <a href="{{ site.baseurl }}/" class="nav-brand" aria-label="EET-GS Lab home">
+        <div class="nav-logo" aria-hidden="true">EET</div>
+        <div>
+          <span class="nav-title">EET-GS Lab</span>
+          <span class="nav-subtitle">Energy Equity &amp; Transition</span>
+        </div>
+      </a>
+
+      <button class="nav-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="{{ site.baseurl }}/">Home</a></li>
+        <li><a href="{{ site.baseurl }}/projects/">Projects</a></li>
+        <li><a href="{{ site.baseurl }}/publications/">Publications</a></li>
+        <li><a href="{{ site.baseurl }}/members/">Lab Members</a></li>
+        <li><a href="{{ site.baseurl }}/contact/" class="nav-cta">Collaborate</a></li>
+      </ul>
+
+    </div>
+  </nav>
+
+  <!-- ===== PAGE CONTENT ===== -->
+  <main id="main-content">
+    {{ content }}
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+
+        <div class="footer-brand">
+          <div class="nav-logo" aria-hidden="true">EET</div>
+          <h3>EET-GS Lab</h3>
+          <p>Advancing equitable, resilient, and low-carbon power systems for the Global South through evidence-based research, modeling, and policy engagement.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="{{ site.baseurl }}/">Home</a></li>
+            <li><a href="{{ site.baseurl }}/projects/">Projects</a></li>
+            <li><a href="{{ site.baseurl }}/publications/">Publications</a></li>
+            <li><a href="{{ site.baseurl }}/members/">Lab Members</a></li>
+            <li><a href="{{ site.baseurl }}/contact/">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="mailto:contact@eetgslab.org">contact@eetgslab.org</a></li>
+            <li><a href="https://github.com/FiruzAhamed/eetgslab" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="{{ site.baseurl }}/contact/">Partner With Us</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 Energy Equity &amp; Transition Lab &mdash; Hosted on GitHub Pages</p>
+        <p>GPL-3.0 License</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>
