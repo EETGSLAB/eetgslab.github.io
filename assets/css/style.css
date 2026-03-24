@@ -653,7 +653,7 @@ a:hover { color: var(--color-accent3); }
 }
 
 .member-avatar {
-  width: 72px; height: 72px;
+  width: 140px; height: 140px;
   border-radius: 50%;
   object-fit: cover;
   margin: 0 auto 0.9rem;
@@ -662,7 +662,7 @@ a:hover { color: var(--color-accent3); }
 }
 
 .member-avatar-placeholder {
-  width: 72px; height: 72px;
+  width: 140px; height: 140px;
   border-radius: 50%;
   background: linear-gradient(135deg, #2d6a4f, #40916c);
   display: flex; align-items: center; justify-content: center;
